@@ -58,9 +58,6 @@ USING_NAMESPACE(std)
 
 
 
-#define CRYPTOGRAPHIC_KEY_LENGTH		1024
-#define SALT_BYTE_LENGTH			41
-
 static std::string m_ErrorMessage;
 
 
