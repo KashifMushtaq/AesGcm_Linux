@@ -14,13 +14,13 @@ This repository consists 2 **Apache Netbeans projects**. Please clone the reposi
 ### Build Steps:
 
 ### Crypto++:
-To build, please open **cryptopp870** folder in **terminal** and enter **make** command. It will build **libcryptopp.a** static library. The ligrary defaults to OS architecture. GcmAes Netbeans project depends on libcryptopp.a and is linked to it.
+To build, please open **cryptopp870** folder in **terminal** and enter **make** command. It will build **libcryptopp.a** static library. The library defaults to OS architecture. GcmAes Netbeans project depends on libcryptopp.a and is linked to it.
 
 Once the library is available, you can build both projects individually from Netbeans IDE. **GcmAesTest** project has **libGcmAes.so** depedency and will be pre-build. Once build, the projects could be debugged as well.
 
 The test program validates few encryption and decryption tests. One of them is the decryption of text which was encrypted using Java code (links available below).
 
-It produce following sample test restlts:
+It produce following sample test results:
 
 ```
 Key=AA85FDCFDB92658D1DA0F8D9271435AA10416A118557F5772C8CD9F63AC6911F
@@ -53,6 +53,6 @@ You can also read more about Crypto++ AES GCM implementation or algorithm itself
 
 ### Related Projects:
 
-### [C# Verion](https://github.com/KashifMushtaq/AesGcm256)
-### [C++ Verion](https://github.com/KashifMushtaq/AES_GCM_256_C)
-### [Java Verion](https://github.com/KashifMushtaq/Aes256GCM_Java)
+### [C# Version](https://github.com/KashifMushtaq/AesGcm256)
+### [C++ Version](https://github.com/KashifMushtaq/AES_GCM_256_C)
+### [Java Version](https://github.com/KashifMushtaq/Aes256GCM_Java)
