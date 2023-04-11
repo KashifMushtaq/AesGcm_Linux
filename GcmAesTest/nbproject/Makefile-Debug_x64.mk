@@ -35,7 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/Cryptographer.o
+	${OBJECTDIR}/main.o
 
 
 # C Compiler Flags
@@ -52,32 +52,38 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=cryptopp870/libcryptopp.a
+LDLIBSOPTIONS=-Wl,-rpath,'../GcmAes/dist/Debug_x64/GNU-Linux' -L../GcmAes/dist/Debug_x64/GNU-Linux -lGcmAes
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libGcmAes.${CND_DLIB_EXT}
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/gcmaestest
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libGcmAes.${CND_DLIB_EXT}: cryptopp870/libcryptopp.a
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/gcmaestest: ../GcmAes/dist/Debug_x64/GNU-Linux/libGcmAes.so
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libGcmAes.${CND_DLIB_EXT}: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/gcmaestest: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libGcmAes.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -shared -fPIC
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/gcmaestest ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/Cryptographer.o: Cryptographer.cpp
+${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -std=c++14 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Cryptographer.o Cryptographer.cpp
+	$(COMPILE.cc) -g -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 # Subprojects
 .build-subprojects:
+	cd ../GcmAes && ${MAKE}  -f Makefile CONF=Debug_x64
+	cd ../GcmAes && ${MAKE}  -f Makefile CONF=Debug_x64
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
+	${RM} -r ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libGcmAes.so
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/gcmaestest
 
 # Subprojects
 .clean-subprojects:
+	cd ../GcmAes && ${MAKE}  -f Makefile CONF=Debug_x64 clean
+	cd ../GcmAes && ${MAKE}  -f Makefile CONF=Debug_x64 clean
 
 # Enable dependency checking
 .dep.inc: .depcheck-impl

@@ -1,3 +1,25 @@
+/*
+Copyright (©) 2023 Kashif Mushtaq
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sub-license, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
 #include "Cryptographer.h"
 
 bool
@@ -56,7 +78,17 @@ _encrypt_GcmAes256(/*[in]*/const char *inHexKey, /*[in]*/const char *inHexIv, /*
 
     std::string aesKey(inHexKey);
     std::string aesIv(inHexIv);
-
+    
+    if (aesKey.length() != 64 && aesIv.length() != 32)
+    {
+        logtosys(1, "%s", "AES Session Key must be 64 character hex string and IV must be 32 character hex string");
+        return false;
+    }
+    
+    //Hex decode incoming Key and IV
+    hexDecode(aesKey);
+    hexDecode(aesIv);
+    
     std::string outText;
     std::string outBase64;
 
@@ -69,6 +101,12 @@ _encrypt_GcmAes256(/*[in]*/const char *inHexKey, /*[in]*/const char *inHexIv, /*
         m_ErrorMessage.append("_encrypt_GcmAes256 -> AES Session Key or IV cannot be empty");
     }
 
+    if(m_ErrorMessage.length()>0)
+    {
+        logtosys(1, "%s", m_ErrorMessage.c_str());
+        m_ErrorMessage.clear();
+    }
+    
     outText.clear();
     outBase64.clear();
 
@@ -83,6 +121,16 @@ _decrypt_GcmAes256(/*[in]*/const char *inHexKey, /*[in]*/const char *inHexIv, /*
     std::string aesKey(inHexKey);
     std::string aesIv(inHexIv);
 
+    if (aesKey.length() != 64 && aesIv.length() != 32)
+    {
+        logtosys(1, "%s", "AES Session Key must be 64 character hex string and IV must be 32 character hex string");
+        return false;
+    }
+    
+    //Hex decode incoming Key and IV
+    hexDecode(aesKey);
+    hexDecode(aesIv);
+    
     if (aesKey.length() > 0 && aesIv.length() > 0)
     {
         bR = _decrypt_local(aesKey.c_str(), aesIv.c_str(), inBase64Text, outDecrypted, dataLength);
@@ -92,6 +140,12 @@ _decrypt_GcmAes256(/*[in]*/const char *inHexKey, /*[in]*/const char *inHexIv, /*
         m_ErrorMessage.append("_decrypt_GcmAes256 -> AES Session Key or IV cannot be empty");
     }
 
+    if(m_ErrorMessage.length()>0)
+    {
+        logtosys(1, "%s", m_ErrorMessage.c_str());
+        m_ErrorMessage.clear();
+    }
+    
     return bR;
 }
 
@@ -168,6 +222,12 @@ _getNewAESKeyAndIv(/*[out]*/ char **outHexKey, /*[out]*/ char **outHexIv, /*[out
         m_ErrorMessage.clear();
     }
 
+    if(m_ErrorMessage.length()>0)
+    {
+        logtosys(1, "%s", m_ErrorMessage.c_str());
+        m_ErrorMessage.clear();
+    }
+    
     return bR;
 }
 
@@ -178,7 +238,7 @@ _encrypt_local(/*[in]*/const char *aesKey, /*[in]*/const char *aesIV, /*[in]*/co
     std::string outText;
     std::string outBase64;
 
-    if (strlen(aesKey) > 64 && strlen(aesIV) > 32)
+    if (strlen(aesKey) > 0 && strlen(aesIV) > 0)
     {
         try
         {
@@ -238,7 +298,7 @@ _decrypt_local(/*[in]*/const char *aesKey, /*[in]*/const char *aesIV, /*[in]*/co
     std::string pszDecodedText;
     Base64Decode(inBase64Text, pszDecodedText);
 
-    if (strlen(aesKey) == 64 && strlen(aesIV) == 32)
+    if (strlen(aesKey) > 0 && strlen(aesIV) > 0)
     {
         try
         {

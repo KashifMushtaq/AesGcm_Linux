@@ -43,6 +43,11 @@
           <architecture>2</architecture>
           <standard>11</standard>
         </ccTool>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerLibFileItem>cryptopp870/libcryptopp.a</linkerLibFileItem>
+          </linkerLibItems>
+        </linkerTool>
       </compileType>
       <item path="Cryptographer.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -70,6 +75,11 @@
         <asmTool>
           <developmentMode>5</developmentMode>
         </asmTool>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerLibFileItem>cryptopp870/libcryptopp.a</linkerLibFileItem>
+          </linkerLibItems>
+        </linkerTool>
       </compileType>
       <item path="Cryptographer.cpp" ex="false" tool="1" flavor2="0">
       </item>
