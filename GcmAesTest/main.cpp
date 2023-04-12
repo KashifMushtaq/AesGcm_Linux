@@ -145,6 +145,7 @@ int main(int argc, char** argv)
     else
     {
         printf("%s", "Test 2 -> Encryption failed. Please check syslog for errors");
+        return 1;
     }
 
     char* outDecrypted = nullptr;
@@ -160,6 +161,7 @@ int main(int argc, char** argv)
     else
     {
         printf("%s", "Test 2 -> Decryption failed. Please check syslog for errors");
+        return 1;
     }
     
     //clear buffers
@@ -192,6 +194,7 @@ int main(int argc, char** argv)
     else
     {
         printf("%s", "Test 3 -> Java Decryption failed. Please check syslog for errors");
+        return 1;
     }
     
     //clear buffers
