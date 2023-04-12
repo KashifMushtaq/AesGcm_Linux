@@ -51,6 +51,8 @@ using CryptoPP::AES;
 using CryptoPP::GCM;
 using CryptoPP::GCM_TablesOption;
 
+#define _XOPEN_SOURCE_EXTENDED 1
+#include <syslog.h>
 
 #include <iostream>
 #include <time.h>
@@ -61,7 +63,6 @@ using CryptoPP::GCM_TablesOption;
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
-#include <syslog.h>
 #include <stdarg.h>
 #include<string.h>
 #include <fcntl.h>

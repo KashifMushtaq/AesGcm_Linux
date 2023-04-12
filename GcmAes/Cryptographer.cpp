@@ -103,7 +103,7 @@ _encrypt_GcmAes256(/*[in]*/const char *inHexKey, /*[in]*/const char *inHexIv, /*
 
     if(m_ErrorMessage.length()>0)
     {
-        logtosys(1, "%s", m_ErrorMessage.c_str());
+        logtosys(LOG_ERR, "%s", m_ErrorMessage.c_str());
         m_ErrorMessage.clear();
     }
     
@@ -142,7 +142,7 @@ _decrypt_GcmAes256(/*[in]*/const char *inHexKey, /*[in]*/const char *inHexIv, /*
 
     if(m_ErrorMessage.length()>0)
     {
-        logtosys(1, "%s", m_ErrorMessage.c_str());
+        logtosys(LOG_ERR, "%s", m_ErrorMessage.c_str());
         m_ErrorMessage.clear();
     }
     
@@ -216,15 +216,9 @@ _getNewAESKeyAndIv(/*[out]*/ char **outHexKey, /*[out]*/ char **outHexIv, /*[out
         m_ErrorMessage.append(e->GetWhat());
     }
 
-    if (m_ErrorMessage.length() > 0)
-    {
-        logtosys(0, m_ErrorMessage.c_str());
-        m_ErrorMessage.clear();
-    }
-
     if(m_ErrorMessage.length()>0)
     {
-        logtosys(1, "%s", m_ErrorMessage.c_str());
+        logtosys(LOG_ERR, "%s", m_ErrorMessage.c_str());
         m_ErrorMessage.clear();
     }
     
