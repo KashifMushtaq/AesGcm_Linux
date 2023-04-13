@@ -34,7 +34,8 @@ Test 1 -> Encrypted base64 encoded: 8iHGeXHV4giaO3TqTizUOVEmC8Ik04aOlPHIt13mhZLS
 Test 1 -> Decrypted: Test encryption and decryption
 Test 1 -> Encryption / Decryption OK
 
-Plain Text: Test encryption and decryptionTest 2 -> Encrypted base64 encoded: A/boAixWJKflKviHp2cfDl6l/xn1qw2MsHcKFkrOfm2XOVmawIFct4fS1w7wKw==
+Plain Text: Test encryption and decryption
+Test 2 -> Encrypted base64 encoded: A/boAixWJKflKviHp2cfDl6l/xn1qw2MsHcKFkrOfm2XOVmawIFct4fS1w7wKw==
 Test 2 -> Decrypted: Test encryption and decryption
 Test 2 -> Encryption / Decryption OK
 
