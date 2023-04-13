@@ -23,14 +23,14 @@ The test program validates few encryption and decryption tests. One of them is t
 It produce following sample test results:
 
 ```
-Key=AA85FDCFDB92658D1DA0F8D9271435AA10416A118557F5772C8CD9F63AC6911F
+Key=94EC8EC06F82F1CEFF7C107B892B3C5C9483F65F8E9C70AF533C497CD578E7AD
 Len=64
 
-IV=D60C51CD45D77997787B5B601B075F75
+IV=E05985296C3701AB96A5E7408F0D5A70
 Len=32
 Key and IV Test OK
 
-Test 1 -> Encrypted base64 encoded: 8iHGeXHV4giaO3TqTizUOVEmC8Ik04aOlPHIt13mhZLS84Vie2grBGg4/Yoezw==
+Test 1 -> Encrypted base64 encoded: Bpr6R7a1VZ/6qEILPnFSJC9kQ5iUEBR21/n3M6KTEVj41DcxTZJQQNqlYbGdmA==
 Test 1 -> Decrypted: Test encryption and decryption
 Test 1 -> Encryption / Decryption OK
 
@@ -41,6 +41,22 @@ Test 2 -> Encryption / Decryption OK
 
 Test 3 -> Decrypted: Test encryption and decryption
 Test 3 -> Java Encrypted / C++ Decryption OK
+
+Test 4 -> Multi-byte Text: syllabic kana – hiragana (平仮名) and katakana (片仮名)
+Test 4 -> Hex Encoded: 73796C6C61626963206B616E6120E28093206869726167616E612028E5B9B3E4BBAEE5908D2920616E64206B6174616B616E612028E78987E4BBAEE5908D29
+Test 4 -> Hex Encoding OK
+
+Test 5 -> Multi-byte Text: syllabic kana – hiragana (平仮名) and katakana (片仮名)
+Test 5 -> Hex Decoded: syllabic kana – hiragana (平仮名) and katakana (片仮名)
+Test 5 -> Hex Decoding OK
+
+Test 6 -> Multi-byte Text: syllabic kana – hiragana (平仮名) and katakana (片仮名)
+Test 6 -> Base64 Encoded: c3lsbGFiaWMga2FuYSDigJMgaGlyYWdhbmEgKOW5s+S7ruWQjSkgYW5kIGthdGFrYW5hICjniYfku67lkI0p
+Test 6 -> Base64 Encoding OK
+
+Test 7 -> Multi-byte Text: syllabic kana – hiragana (平仮名) and katakana (片仮名)
+Test 7 -> Base64 Decoded: syllabic kana – hiragana (平仮名) and katakana (片仮名)
+Test 7 -> Base64 Decoding OK
 ```
 
 The test project also demonstrates how to use the **libGcmAes.so** with other C++ projects on Linux like systems. Normally, just have to include **GcmAes.h** in your project and must link your project against **libGcmAes.so**. Code uses **C++ 14** standard.
