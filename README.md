@@ -14,7 +14,7 @@ This repository consists 2 **Apache Netbeans projects**. Please clone the reposi
 ### Build Steps:
 
 ### Crypto++:
-To build, please open **cryptopp870** folder in **terminal** and enter **make** command. It will build **libcryptopp.a** static library. The library defaults to OS architecture. GcmAes Netbeans project depends on libcryptopp.a and is linked to it.
+To build, please open **cryptopp870** folder in **terminal** and enter **make** command. It will build **libcryptopp.a** static library. The library defaults to OS architecture. GcmAes Netbeans project depends on **libcryptopp.a** and is linked to it.
 
 Once the library is available, you can build both projects individually from Netbeans IDE. **GcmAesTest** project has **libGcmAes.so** depedency and will be pre-build. Once build, the projects could be debugged as well.
 
