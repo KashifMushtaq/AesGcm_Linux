@@ -18,7 +18,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-*/
+ */
 
 #pragma once
 
@@ -84,8 +84,7 @@ static std::string m_ErrorMessage;
 
 static inline RandomNumberGenerator& PSRNG(void);
 
-static inline RandomNumberGenerator& PSRNG(void)
-{
+static inline RandomNumberGenerator& PSRNG(void) {
     static AutoSeededRandomPool rng;
     rng.Reseed();
     return rng;
@@ -98,17 +97,20 @@ static void logtosys(int err, const char *format, ...);
 Exported for dynamic loading and calling
  */
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
+
+    bool _base64Encode(/*[in]*/ const char *inPlainText, /*[out]*/ char **outBase64Encoded, /*[in, out]*/ int &dataLength);
+    bool _base64Decode(/*[in]*/ const char *inBase64Text, /*[out]*/ char **outPlainText, /*[in, out]*/ int &dataLength);
+    bool _hexDecode(/*[in]*/ const char *inHexEncodedText, /*[out]*/char **outHexDecoded);
+    bool _hexEncode(/*[in]*/ const char *inData, /*[out]*/char **outHexEncoded);
+
+    bool _encrypt_GcmAes256(/*[in]*/ const char *inHexKey, /*[in]*/ const char *inHexIv, /*[in]*/ const char *inPlainText, /*[out]*/ char **outEncryptedBase64, /*[in, out]*/ int &dataLength);
+    bool _decrypt_GcmAes256(/*[in]*/ const char *inHexKey, /*[in]*/ const char *inHexIv, /*[in]*/ const char *inBase64Text, /*[out]*/ char **outDecrypted, /*[in, out]*/ int &dataLength);
+
+    bool _getNewAESKeyAndIv(/*[out]*/ char **outHexKey, /*[out]*/ char **outHexIv, /*[out]*/ int &outKeyLength, /*[out]*/ int &outIvLength);
+
     
-    bool _base64Encode(/*[in]*/const char *inPlainText, /*[out]*/ char **outBase64Encoded, /*[in, out]*/int &dataLength);
-    bool _base64Decode(/*[in]*/const char *inBase64Text, /*[out]*/ char **outPlainText, /*[in, out]*/int &dataLength);
-
-    bool _encrypt_GcmAes256(/*[in]*/const char *inHexKey, /*[in]*/const char *inHexIv, /*[in]*/const char *inPlainText, /*[out]*/ char **outEncryptedBase64, /*[in, out]*/int &dataLength);
-    bool _decrypt_GcmAes256(/*[in]*/const char *inHexKey, /*[in]*/const char *inHexIv, /*[in]*/const char *inBase64Text, /*[out]*/ char **outDecrypted, /*[in, out]*/int &dataLength);
-
-    bool _getNewAESKeyAndIv(/*[out]*/ char **outHexKey, /*[out]*/ char **outHexIv, /*[out]*/int &outKeyLength, /*[out]*/int &outIvLength);
 
 #ifdef __cplusplus
 }

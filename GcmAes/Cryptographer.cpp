@@ -34,8 +34,8 @@ _base64Encode(/*[in]*/const char *inPlainText, /*[out]*/ char **outBase64Encoded
     dataLength = pszOut.length();
     if (dataLength > 0)
     {
-        if (*outBase64Encoded) free(*outBase64Encoded);
-        *outBase64Encoded = (char*) malloc(dataLength + 1);
+        if (*outBase64Encoded) delete *outBase64Encoded;
+        *outBase64Encoded = new char[dataLength + 1];
         memset(*outBase64Encoded, '\0', dataLength + 1);
         memcpy(*outBase64Encoded, pszOut.c_str(), dataLength);
         bR = true;
@@ -54,9 +54,9 @@ _base64Decode(/*[in]*/const char *inBase64Text, /*[out]*/ char **outPlainText, /
 
     if (pszOut.length() > 0)
     {
-        if (*outPlainText) free(*outPlainText);
+        if (*outPlainText) delete *outPlainText;
         dataLength = pszOut.length();
-        *outPlainText = (char*) malloc(dataLength + 1);
+        *outPlainText = new char[dataLength + 1];
         memset(*outPlainText, '\0', dataLength + 1);
         memcpy(*outPlainText, pszOut.c_str(), dataLength);
         bR = true;
@@ -159,12 +159,12 @@ _getNewAESKeyAndIv(/*[out]*/ char **outHexKey, /*[out]*/ char **outHexIv, /*[out
         std::string outAESKey;
         std::string outAESIV;
 
-        byte *bKey = new byte[AES::MAX_KEYLENGTH];
-        memset(bKey, 0, AES::MAX_KEYLENGTH);
+        byte *bKey = new byte[AES::MAX_KEYLENGTH+1];
+        memset(bKey, 0, AES::MAX_KEYLENGTH+1);
         PSRNG().GenerateBlock(bKey, AES::MAX_KEYLENGTH);
 
-        byte *bIV = new byte[AES::BLOCKSIZE];
-        memset(bIV, 0, AES::BLOCKSIZE);
+        byte *bIV = new byte[AES::BLOCKSIZE+1];
+        memset(bIV, 0, AES::BLOCKSIZE+1);
         PSRNG().GenerateBlock(bIV, AES::BLOCKSIZE);
 
 
@@ -189,11 +189,11 @@ _getNewAESKeyAndIv(/*[out]*/ char **outHexKey, /*[out]*/ char **outHexIv, /*[out
 
         if (outKeyLength > 0 && outIvLength > 0)
         {
-            if (*outHexKey) free(*outHexKey);
-            if (*outHexIv) free(*outHexIv);
+            if (*outHexKey) delete *outHexKey;
+            if (*outHexIv) delete *outHexIv;
 
-            *outHexKey = (char*) malloc(outKeyLength + 1);
-            *outHexIv = (char*) malloc(outIvLength + 1);
+            *outHexKey = new char[outKeyLength + 1];
+            *outHexIv = new char[outIvLength + 1];
 
             memset(*outHexKey, '\0', outKeyLength + 1);
             memset(*outHexIv, '\0', outIvLength + 1);
@@ -250,8 +250,8 @@ _encrypt_local(/*[in]*/const char *aesKey, /*[in]*/const char *aesIV, /*[in]*/co
             dataLength = outBase64.length();
             if (outBase64.length() > 0)
             {
-                if (*outEncryptedBase64) free(*outEncryptedBase64);
-                *outEncryptedBase64 = (char*) malloc(dataLength + 1);
+                if (*outEncryptedBase64) delete *outEncryptedBase64;
+                *outEncryptedBase64 = new char[dataLength + 1];
                 memset(*outEncryptedBase64, '\0', dataLength + 1);
                 memcpy(*outEncryptedBase64, outBase64.c_str(), dataLength);
 
@@ -320,8 +320,8 @@ _decrypt_local(/*[in]*/const char *aesKey, /*[in]*/const char *aesIV, /*[in]*/co
             dataLength = outText.length();
             if (outText.length() > 0)
             {
-                if (*outDecrypted) free(*outDecrypted);
-                *outDecrypted = (char*) malloc(dataLength + 1);
+                if (*outDecrypted) delete *outDecrypted;
+                *outDecrypted = new char[dataLength + 1];
                 memset(*outDecrypted, '\0', dataLength + 1);
                 memcpy(*outDecrypted, outText.c_str(), dataLength);
 
@@ -353,6 +353,61 @@ _decrypt_local(/*[in]*/const char *aesKey, /*[in]*/const char *aesIV, /*[in]*/co
     return bR;
 }
 
+
+bool _hexDecode(/*[in]*/ const char *inHexEncodedText, /*[out]*/char **outHexDecoded)
+{
+    std::string hexString = inHexEncodedText;
+    
+    if (!hexString.c_str()) return false;
+    if (hexString.length() == 0) return false;
+
+    hexDecode(hexString);
+
+    int dataLength = hexString.length();
+    if (hexString.length() > 0)
+    {
+        if (*outHexDecoded) delete *outHexDecoded;
+        *outHexDecoded = new char[dataLength + 1];
+        memset(*outHexDecoded, '\0', dataLength + 1);
+        memcpy(*outHexDecoded, hexString.c_str(), dataLength);
+
+        return true;
+    }
+    
+    return false;
+}
+
+
+bool _hexEncode(/*[in]*/ const char *inData, /*[out]*/char **outHexEncoded)
+{
+    bool bR = false;
+    int len = strlen(inData);
+    
+    byte *bData = new byte[len + 1];
+    memset(bData, '\0', len + 1);
+    memcpy(bData, inData, len);
+        
+    std::string outHex = "";
+    HexEncoder *hexEncoder = new HexEncoder(new StringSink(outHex));
+    hexEncoder->Put(bData, len);
+    hexEncoder->MessageEnd();
+    delete hexEncoder;
+    
+    delete bData;
+
+    int dataLength = outHex.length();
+    if (outHex.length() > 0)
+    {
+        if (*outHexEncoded) delete *outHexEncoded;
+        *outHexEncoded = new char[dataLength + 1];
+        memset(*outHexEncoded, '\0', dataLength + 1);
+        memcpy(*outHexEncoded, outHex.c_str(), dataLength);
+        bR = true;
+    }
+
+    return bR;
+}
+    
 void
 hexDecode(std::string &hexString)
 {

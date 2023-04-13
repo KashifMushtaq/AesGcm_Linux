@@ -18,7 +18,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-*/
+ */
 
 #ifndef __CRYPTOGRAPHER_INCLUDE_HEADER__
 #define __CRYPTOGRAPHER_INCLUDE_HEADER__
@@ -47,19 +47,26 @@ SOFTWARE.
 Exported for dynamic loading and calling
  */
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
-// ----------------------------------- libGcmAes.so Exports -----------------------------------
-bool _base64Encode(/*[in]*/const char *inPlainText, /*[out]*/ char **outBase64Encoded, /*[in, out]*/int &dataLength);
-bool _base64Decode(/*[in]*/const char *inBase64Text, /*[out]*/ char **outPlainText, /*[in, out]*/int &dataLength);
+    /*
+     * Note:
+     * All functions returning buffers like **out<name> are allocated using new and are null terminated.
+     * Users must clear them using delete *out<name>
+     */
 
-bool _encrypt_GcmAes256(/*[in]*/const char *inHexKey, /*[in]*/const char *inHexIv, /*[in]*/const char *inPlainText, /*[out]*/ char **outEncryptedBase64, /*[in, out]*/int &dataLength);
-bool _decrypt_GcmAes256(/*[in]*/const char *inHexKey, /*[in]*/const char *inHexIv, /*[in]*/const char *inBase64Text, /*[out]*/ char **outDecrypted, /*[in, out]*/int &dataLength);
+    // ----------------------------------- libGcmAes.so Exports -----------------------------------
+    bool _base64Encode(/*[in]*/ const char *inPlainText, /*[out]*/ char **outBase64Encoded, /*[in, out]*/ int &dataLength);
+    bool _base64Decode(/*[in]*/ const char *inBase64Text, /*[out]*/ char **outPlainText, /*[in, out]*/ int &dataLength);
+    bool _hexDecode(/*[in]*/ const char *inHexEncodedText, /*[out]*/ char **outHexDecoded);
+    bool _hexEncode(/*[in]*/ const char *inData, /*[out]*/ char **outHexEncoded);
 
-bool _getNewAESKeyAndIv(/*[out]*/ char **outHexKey, /*[out]*/ char **outHexIv, /*[out]*/int &outKeyLength, /*[out]*/int &outIvLength);
-// ----------------------------------- libGcmAes.so Exports -----------------------------------
+    bool _encrypt_GcmAes256(/*[in]*/const char *inHexKey, /*[in]*/const char *inHexIv, /*[in]*/const char *inPlainText, /*[out]*/ char **outEncryptedBase64, /*[in, out]*/int &dataLength);
+    bool _decrypt_GcmAes256(/*[in]*/const char *inHexKey, /*[in]*/const char *inHexIv, /*[in]*/const char *inBase64Text, /*[out]*/ char **outDecrypted, /*[in, out]*/int &dataLength);
+
+    bool _getNewAESKeyAndIv(/*[out]*/ char **outHexKey, /*[out]*/ char **outHexIv, /*[in, out]*/int &outKeyLength, /*[in, out]*/ int &outIvLength);
+    // ----------------------------------- libGcmAes.so Exports -----------------------------------
 
 #ifdef __cplusplus
 }
