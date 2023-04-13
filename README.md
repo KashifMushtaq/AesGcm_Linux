@@ -1,4 +1,4 @@
-# Cross Platform AES 256 GCM Encryption / Decryption (C++ dynamic library)
+# Cross Platform AES 256 GCM Encryption / Decryption (Linux x64 C++ dynamic library)
 
 ![C# Test](/GcmAes.png)
 
