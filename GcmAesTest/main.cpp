@@ -112,18 +112,18 @@ int main(int argc, char** argv)
     inHexIV.clear();
 
     //clear buffers
-    if (outTestEncrypted) delete outTestEncrypted;
+    if (outTestEncrypted) delete[] outTestEncrypted;
     outTestEncrypted = nullptr;
 
-    if (outTestDecrypted) delete outTestDecrypted;
+    if (outTestDecrypted) delete[] outTestDecrypted;
     outTestDecrypted = nullptr;
 
 
     //clear buffers allocated by _getNewAESKeyAndIv function
-    if (pszKey) delete pszKey;
+    if (pszKey) delete[] pszKey;
     pszKey = nullptr;
 
-    if (pszIv) delete pszIv;
+    if (pszIv) delete[] pszIv;
     pszIv = nullptr;
 
 
@@ -173,10 +173,10 @@ int main(int argc, char** argv)
     }
 
     //clear buffers
-    if (outEncrypted) delete outEncrypted;
+    if (outEncrypted) delete[] outEncrypted;
     outEncrypted = nullptr;
 
-    if (outDecrypted) delete outDecrypted;
+    if (outDecrypted) delete[] outDecrypted;
     outDecrypted = nullptr;
 
     /* ----------------------- C++ Encryption and C++ Decryption Test ----------------------- */
@@ -192,7 +192,7 @@ int main(int argc, char** argv)
     // A/boAixWJKflKviHp2cfDl6l/xn1qw2MsHcKFkrOfm2XOVmawIFct4fS1w7wKw==
 
     std::string javaEncrypted = "A/boAixWJKflKviHp2cfDl6l/xn1qw2MsHcKFkrOfm2XOVmawIFct4fS1w7wKw==";
-    char* outCDecrypted;
+    char* outCDecrypted=nullptr;
     int outCDecryptedLen = 0;
 
     //decrypt - result plain text
@@ -209,7 +209,7 @@ int main(int argc, char** argv)
     }
 
     //clear buffers
-    if (outCDecrypted) delete outCDecrypted;
+    if (outCDecrypted) delete[] outCDecrypted;
     outCDecrypted = nullptr;
 
     /* ----------------------- Java based Encryption and C++ Decryption Test ----------------------- */
@@ -276,8 +276,8 @@ int main(int argc, char** argv)
         return 1;
     }
     
-    if(hexEncoded) delete hexEncoded;
-    if(hexDecoded) delete hexDecoded;
+    if(hexEncoded) delete[] hexEncoded;
+    if(hexDecoded) delete[] hexDecoded;
     hexEncoded = nullptr;
     hexDecoded = nullptr;
 
@@ -319,8 +319,8 @@ int main(int argc, char** argv)
         return 1;
     }
     
-    if(base64Encoded) delete base64Encoded;
-    if(base64Decoded) delete base64Decoded;
+    if(base64Encoded) delete[] base64Encoded;
+    if(base64Decoded) delete[] base64Decoded;
     base64Encoded = nullptr;
     base64Decoded = nullptr;
     
