@@ -53,7 +53,7 @@ int main(int argc, char** argv)
     int keyLen = 0;
     int ivLen = 0;
 
-    std::string plainText = "Test encryption and decryption";
+    std::string plainText = "Syllabic kana – hiragana(平仮名) and katakana(片仮名)";//"Test encryption and decryption";
     bool result = false;
 
     /* ----------------------- Key Generation Test ----------------------- */
@@ -85,6 +85,7 @@ int main(int argc, char** argv)
     if (result)
     {
         printf("Test 1 -> Encrypted base64 encoded: %s\n", outTestEncrypted);
+        printf("Test 1 -> Encrypted Len: %i\n", outTestEncryptedLen);
     }
     else
     {
@@ -100,6 +101,7 @@ int main(int argc, char** argv)
     if (result && strcmp(plainText.c_str(), outTestDecrypted) == 0)
     {
         printf("Test 1 -> Decrypted: %s\n", outTestDecrypted);
+        printf("Test 1 -> Decrypted Len: %i\n", outTestDecryptedLen);
         printf("Test 1 -> Encryption / Decryption OK\n\n");
     }
     else
@@ -149,6 +151,7 @@ int main(int argc, char** argv)
     if (result)
     {
         printf("Test 2 -> Encrypted base64 encoded: %s\n", outEncrypted);
+        printf("Test 2 -> Encrypted Len: %i\n", outEncryptedLen);
     }
     else
     {
@@ -164,6 +167,7 @@ int main(int argc, char** argv)
     if (result && strcmp(plainText.c_str(), outDecrypted) == 0)
     {
         printf("Test 2 -> Decrypted: %s\n", outDecrypted);
+        printf("Test 2 -> Decrypted Len: %i\n", outDecryptedLen);
         printf("Test 2 -> Encryption / Decryption OK\n\n");
     }
     else
@@ -191,15 +195,17 @@ int main(int argc, char** argv)
     //Java Encrypted with same Key and IV as above
     // A/boAixWJKflKviHp2cfDl6l/xn1qw2MsHcKFkrOfm2XOVmawIFct4fS1w7wKw==
 
+    std::string javaPlainText = "Test encryption and decryption";
     std::string javaEncrypted = "A/boAixWJKflKviHp2cfDl6l/xn1qw2MsHcKFkrOfm2XOVmawIFct4fS1w7wKw==";
     char* outCDecrypted=nullptr;
     int outCDecryptedLen = 0;
 
     //decrypt - result plain text
     result = _decrypt_GcmAes256(hexKey.c_str(), hexIV.c_str(), javaEncrypted.c_str(), &outCDecrypted, outCDecryptedLen);
-    if (result && strcmp(plainText.c_str(), outCDecrypted) == 0)
+    if (result && strcmp(javaPlainText.c_str(), outCDecrypted) == 0)
     {
         printf("Test 3 -> Decrypted: %s\n", outCDecrypted);
+        printf("Test 3 -> Decrypted Len: %i\n", outCDecryptedLen);
         printf("Test 3 -> Java Encrypted / C++ Decryption OK\n\n");
     }
     else
